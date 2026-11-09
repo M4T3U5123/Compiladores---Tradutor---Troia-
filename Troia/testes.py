@@ -59,6 +59,39 @@ def rodar_testes():
     """
     compilar_troia(codigo_erro_sem_2)
 
+    # 5. Caso Inválido: Erro Sintático (Falta de ponto e vírgula)
+    print("\n" + "-" * 60)
+    print("[TESTE 5] Caso Inválido: Erro Sintático (Falta de terminador ';')")
+    codigo_erro_sint = """
+    kyrios C
+        Zeus forca =_ 100
+        apotypoma(forca);
+    F
+    """
+    compilar_troia(codigo_erro_sint)
+
+    # 6. Caso Válido: Condicional (an / allou) e Relacionais
+    print("\n" + "-" * 60)
+    print("[TESTE 6] Caso Válido: Condicional (an / allou) e Relacionais")
+    codigo_valido_cond = """
+    § Teste de recrutamento para Troia §
+    kyrios C
+        Zeus idade =_ 16;
+        an idade ->= 18 C
+            apotypoma("Apto para lutar!");
+        F
+        allou C
+            apotypoma("Fique na cidade.");
+        F
+    F
+    """
+    res_cond = compilar_troia(codigo_valido_cond)
+    if res_cond:
+        print(">> Sucesso na compilação!")
+        print("Código Python traduzido:")
+        for linha in res_cond.strip().split('\n'):
+            print("  ", linha)
+
 if __name__ == '__main__':
     rodar_testes()
 
