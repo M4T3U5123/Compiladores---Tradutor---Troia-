@@ -92,6 +92,65 @@ def rodar_testes():
         for linha in res_cond.strip().split('\n'):
             print("  ", linha)
 
+    # 7. Caso Válido: Soma de 1 a N (Laço eno e Aritmética)
+    print("\n" + "-" * 60)
+    print("[TESTE 7] Caso Válido: Soma de 1 a N (Laço eno e Aritmética)")
+    codigo_valido_soma = """
+    kyrios C
+        Zeus n =_ 10;
+        Zeus soma =_ 0;
+        Zeus k =_ 1;
+        eno k <-= n C
+            soma =_ soma + k;
+            k =_ k + 1;
+        F
+        apotypoma("Soma de 1 a 10:");
+        apotypoma(soma);
+    F
+    """
+    res_soma = compilar_troia(codigo_valido_soma)
+    if res_soma:
+        print(">> Sucesso na compilação!")
+        print("Código Python traduzido:")
+        for linha in res_soma.strip().split('\n'):
+            print("  ", linha)
+
+    # 8. Caso Inválido: Erro Semântico (variável usada antes de ser declarada)
+    print("\n" + "-" * 60)
+    print("[TESTE 8] Caso Inválido: Erro Semântico (variável usada antes da declaração)")
+    codigo_erro_sem_3 = """
+    kyrios C
+        an contador -> 0 C
+            apotypoma("positivo");
+        F
+        Zeus contador =_ 0;
+    F
+    """
+    compilar_troia(codigo_erro_sem_3)
+
+    # 9. Caso Inválido: Erro no Gerador (código Python inválido gerado)
+    print("\n" + "-" * 60)
+    print("[TESTE 9] Caso Inválido: Erro no Gerador (Python inválido gerado)")
+    codigo_erro_gerador = """
+    kyrios C
+        Zeus x =_ 5;
+        apodosi x;
+    F
+    """
+    res_gerador = compilar_troia(codigo_erro_gerador)
+    if res_gerador:
+        print(">> Compilação concluída. Código Python gerado:")
+        for linha in res_gerador.strip().split('\n'):
+            print("  ", linha)
+        print()
+        try:
+            compile(res_gerador, '<gerado>', 'exec')
+            print(">> Código Python gerado é válido.")
+        except SyntaxError as e:
+            print(f">> [ERRO NO GERADOR] Código Python gerado é inválido: {e}")
+            print(">> Causa: 'apodosi' gera 'return' no nível do módulo,")
+            print("   o que é inválido em Python 3 (return fora de função).")
+
 if __name__ == '__main__':
     rodar_testes()
 
